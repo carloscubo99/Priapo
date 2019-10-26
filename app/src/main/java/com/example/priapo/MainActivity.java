@@ -102,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         //Programar alarma para que salte cada aproximadamente 24 horas y que compruebe si el dispositivo se ha reinicado
         programarAlarma24H();
 
+        //Programar alarma que salte cada aproximadamente 24 horas para enviar un mensaje a un servidor
+        alarmaMensajeServidor();
+
         //Consultar estado batería
         consultarBateria();
 
@@ -187,6 +190,16 @@ public class MainActivity extends AppCompatActivity {
         manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         int interval = 1000*60*1440; //Intervalo de tiempo equivalente a 24 horas
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent); //AlarmManager.ELAPSED_REALTIME_WAKEUP se utiliza para despertar al dispositivo un tiempo después de que se haya iniciado ???
+    }
+
+    public void alarmaMensajeServidor(){
+        Intent intent = new Intent(MainActivity.this, MensajeServidorReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+
+        manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        int interval = 1000*60*1440; //Intervalo de tiempo equivalente a 24 horas
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent); //AlarmManager.ELAPSED_REALTIME_WAKEUP se utiliza para despertar al dispositivo un tiempo después de que se haya iniciado ???
+
     }
 
     public void consultarBateria(){
