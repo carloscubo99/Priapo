@@ -18,7 +18,7 @@ import java.net.URL;
 
 public class MensajeServidorReceiver extends BroadcastReceiver {
 
-    private class TareaMensajeServidor extends AsyncTask<Void, Integer, Boolean> { //Tarea para enviar email al servidor
+    private class TareaMensajeServidor extends AsyncTask<Void, Integer, Boolean> { //Tarea para enviar dirección email al servidor por medio de una petición
         String email;
 
         public TareaMensajeServidor(String email){
