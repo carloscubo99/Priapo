@@ -8,18 +8,17 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 public class MensajeServidorReceiver extends BroadcastReceiver {
 
-    private class TareaMensajeServidor extends AsyncTask<Void, Integer, Boolean> { //Tarea para poder realizar una consulta HTTP (en un hilo asíncrono)
+    private class TareaMensajeServidor extends AsyncTask<Void, Integer, Boolean> { //Tarea para enviar email al servidor
         String email;
 
         public TareaMensajeServidor(String email){
@@ -29,7 +28,8 @@ public class MensajeServidorReceiver extends BroadcastReceiver {
         protected Boolean doInBackground(Void... params) {
             URL url = null;
             try {
-                url = new URL("http://virtual.lab.infor.uva.es:62052/~carloscubo/");
+                //URL a la cual va dirigida la petición
+                url = new URL("http://virtual.lab.infor.uva.es:62052/~carloscubo/android/scriptEmail.php?email="+email);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -42,28 +42,13 @@ public class MensajeServidorReceiver extends BroadcastReceiver {
             }
 
             try {
-                // Construir los datos que se envian al servidor
-                String data = "body=" + URLEncoder.encode(email,"UTF-8");
-
-                urlConnection = (HttpURLConnection)url.openConnection();
-
-                // Activa el método POST
-                urlConnection.setDoOutput(true);
-
-                // Establecer el tamaño previamente conocido de los datos a enviar
-                urlConnection.setFixedLengthStreamingMode(data.getBytes().length);
-
-                // Establecer el tipo de contenido a application/x-www-form-urlencoded. El método setRequestProperty permite añadir cabeceras a la petición
-                urlConnection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-
-                //Se obtiene acceso al sistema de ficheros del servidor donde se van a escribir los datos
-                OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-
-                out.write(data.getBytes());
-                out.flush();
-                out.close();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                String contenido = convertirInputStreamAString(in);
+                Log.i("RESPUESTA SERVIDOR", contenido);
 
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 if(urlConnection!=null)
@@ -95,6 +80,18 @@ public class MensajeServidorReceiver extends BroadcastReceiver {
         SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
         String email = prefs.getString("serverEmail", "serverEmail");
         new TareaMensajeServidor(email).execute();
+    }
+
+    public String convertirInputStreamAString(InputStream in) throws Exception {
+        Reader reader = null;
+        reader = new InputStreamReader(in, "UTF-8");
+        char[] buffer = new char[1024];
+        StringBuffer bufferDatos = new StringBuffer();
+        int contador;
+        while((contador = reader.read(buffer)) != -1){
+            bufferDatos.append(buffer, 0, contador);
+        }
+        return bufferDatos.toString();
     }
 
 }

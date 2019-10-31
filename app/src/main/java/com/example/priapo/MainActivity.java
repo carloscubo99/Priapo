@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Comprobando si el nivel de batería es bajo
         if(nivel < 5){
+            Log.i("--bateriaBaja", "BATERÍA BAJA");
             Toast bateriaBaja = Toast.makeText(getApplicationContext(), "BATERÍA BAJA", Toast.LENGTH_SHORT);
             bateriaBaja.show();
         }
@@ -309,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         //Método para conocer el estado de la wifi (si el dispositivo está o no conectado a una wifi e informar del ssid de la red wifi)
+        //Este método se ejecutará cada vez que esta Activity vuelve a primer plano
         comprobarEstadoWifi();
     }
 
