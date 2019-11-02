@@ -30,6 +30,7 @@ public class MensajeServidorReceiver extends BroadcastReceiver {
             try {
                 //URL a la cual va dirigida la petición
                 url = new URL("http://virtual.lab.infor.uva.es:62052/~carloscubo/android/scriptEmail.php?email="+email);
+                Log.i("MENSAJESERVIDOR", "Va todo bien");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -76,7 +77,6 @@ public class MensajeServidorReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("MENSAJESERVIDOR", "Va todo bien");
         SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
         String email = prefs.getString("serverEmail", "serverEmail");
         new TareaMensajeServidor(email).execute();

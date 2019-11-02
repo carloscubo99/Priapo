@@ -231,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         if(isCharging){ //El dispositivo se está cargando o está cargado
             Toast cargando = Toast.makeText(getApplicationContext(), "Dispositivo Cargando/Cargado", Toast.LENGTH_SHORT);
             cargando.show();
+            Log.i("--cargando", "Dispositivo Cargando/Cargado");
             //Ver cómo se está cargando el dispositivo
             int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
             boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
@@ -239,15 +240,18 @@ public class MainActivity extends AppCompatActivity {
             if(usbCharge){
                 Toast usb = Toast.makeText(getApplicationContext(), "El dispositivo está conectado por un usb", Toast.LENGTH_SHORT);
                 usb.show();
+                Log.i("--usb", "Dispositivo conectado por usb");
             }
             if(acCharge){
                 Toast ac = Toast.makeText(getApplicationContext(), "El dispositivo está conectado a la corriente", Toast.LENGTH_SHORT);
                 ac.show();
+                Log.i("--corriente", "Dispositivo conectado a la corriente");
             }
         }
         else{
             Toast noCargando = Toast.makeText(getApplicationContext(), "El dispositivo no se está cargando", Toast.LENGTH_SHORT);
             noCargando.show();
+            Log.i("--noCargando", "Dispositivo no se está cargando");
         }
     }
 
@@ -320,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
         manager.cancel(pendingIntent); //Para cancelar la alarma una vez la aplicación se destruya (Estas alarmas pueden seguir funcionando aunque la aplicación se haya destruido) ¿No funciona?
     }
 
+    //Este método no se utiliza
     public void consultaHTTP(){
         //GET request
         URL url = null;
@@ -348,6 +353,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Este método no se utiliza
     public String readStream(InputStream is) { //Método para pasar la respuesta del tipo InputStream a String
         try {
             ByteArrayOutputStream bo = new ByteArrayOutputStream();
