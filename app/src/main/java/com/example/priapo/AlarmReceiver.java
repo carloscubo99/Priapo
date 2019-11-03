@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-public class AlarmReceiver extends BroadcastReceiver { //BroadcastReceiver para captar la alarma programada en un Intent
+public class AlarmReceiver extends BroadcastReceiver { //BroadcastReceiver para captar una alarma de prueba programada en un Intent
 
     @Override
     public void onReceive(Context context, Intent intent) { //Este método se ejecutará cada vez que se produzca el evento al que está suscrito este broadcast receiver

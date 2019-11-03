@@ -18,7 +18,7 @@ import java.net.URL;
 
 public class MensajeServidorReceiver extends BroadcastReceiver {
 
-    private class TareaMensajeServidor extends AsyncTask<Void, Integer, Boolean> { //Tarea para enviar dirección email al servidor por medio de una petición HTTP
+    private class TareaMensajeServidor extends AsyncTask<Void, Integer, Boolean> { //Tarea para enviar dirección email del cliente al servidor por medio de una petición HTTP
         String email;
 
         public TareaMensajeServidor(String email){
@@ -82,7 +82,7 @@ public class MensajeServidorReceiver extends BroadcastReceiver {
         new TareaMensajeServidor(email).execute();
     }
 
-    public String convertirInputStreamAString(InputStream in) throws Exception {
+    public String convertirInputStreamAString(InputStream in) throws Exception { //Método para pasar la respuesta del tipo InputStream a String
         Reader reader = null;
         reader = new InputStreamReader(in, "UTF-8");
         char[] buffer = new char[1024];

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class Main2Activity extends AppCompatActivity { //Activity 2 que se iniciará desde la MainActivity
+public class Main2Activity extends AppCompatActivity { //Activity 2 que se lanzará desde la MainActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -49,13 +49,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText correo;
     private String preferencia;
 
-    private class MiTareaAsincrona extends AsyncTask<Void, Integer, Boolean> { //Tarea para poder realizar una consulta HTTP (en un hilo asíncrono)
+    private class MiTareaAsincrona extends AsyncTask<Void, Integer, Boolean> { //Ejemplo de tarea en un hilo asíncrono
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            //esto se lanza en el execute
+            //esto se ejecuta al lanzar el método execute
             Log.e("--hilo", "doInBackGround->ESTOY EN OTRO HILO");
-            //consultaHTTP(); //Se llevará a cabo la consulta HTTP en background ?
             return true;
         }
 
@@ -180,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         int interval = 8000;
         //El método setInexactRepeating consume menos que su método homólogo setRepeating. Con este método la alarma no saltará en el momento explícitamente indicado sino aproximadamente
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent); //AlarmManager.ELAPSED_REALTIME_WAKEUP se utiliza para despertar al dispositivo un tiempo después de que se haya iniciado ???
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
     }
 
     public void programarAlarma24H(){
@@ -189,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
         manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         int interval = 1000*60*1440; //Intervalo de tiempo equivalente a 24 horas
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent); //AlarmManager.ELAPSED_REALTIME_WAKEUP se utiliza para despertar al dispositivo un tiempo después de que se haya iniciado ???
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
     }
 
     public void alarmaMensajeServidor(){
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
         manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         int interval = 1000*60*1440; //Intervalo de tiempo equivalente a 24 horas
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent); //AlarmManager.ELAPSED_REALTIME_WAKEUP se utiliza para despertar al dispositivo un tiempo después de que se haya iniciado ???
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
 
     }
 
@@ -321,10 +320,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        manager.cancel(pendingIntent); //Para cancelar la alarma una vez la aplicación se destruya (Estas alarmas pueden seguir funcionando aunque la aplicación se haya destruido) ¿No funciona?
     }
 
     //Este método no se utiliza
+    //La consulta HTTP se hará en un hilo asíncrono dentro de la clase MensajeServidorReceiver.java
     public void consultaHTTP(){
         //GET request
         URL url = null;
